@@ -45,3 +45,6 @@ key
 key.pub
 pdf
 pdf.pub
+# private SSH keys
+key
+key.pub
