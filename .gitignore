@@ -41,10 +41,9 @@ yarn-error.log*
 next-env.d.ts
 
 # private keys
-key
-key.pub
 pdf
 pdf.pub
+
 # private SSH keys
 key
 key.pub
