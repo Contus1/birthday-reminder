@@ -50,119 +50,166 @@ export default function ExportedBacklog() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-white">
-        <div className="flex flex-col items-center space-y-6">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-pink-200 border-t-pink-500"></div>
-          <p className="text-gray-600 text-lg animate-pulse">Loading export history...</p>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0A0A0A' }}>
+        <div className="flex flex-col items-center space-y-8">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-20 w-20 border-4 border-[#1A1A1A] border-t-[#00C08B]"></div>
+            <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.1) 0%, rgba(0, 176, 213, 0.1) 100%)' }}></div>
+          </div>
+          <p className="text-white text-xl font-medium animate-pulse" style={{ fontWeight: 500, letterSpacing: '-0.02em' }}>Loading export history...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }}>
       {/* Navigation Header */}
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+      <nav className="backdrop-blur-xl border-b sticky top-0 z-50" style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
+        <div className="max-w-6xl mx-auto px-8 py-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => router.push('/dashboard')}
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center space-x-2 transition-colors duration-300 hover:text-white"
+                style={{ color: 'rgba(255, 255, 255, 0.7)' }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span>Back to Dashboard</span>
+                <span className="font-medium">Back to Dashboard</span>
               </button>
             </div>
             
-            <div className="text-lg font-semibold text-gray-900">
+            <div className="text-lg font-semibold text-white" style={{ fontWeight: 600, letterSpacing: '-0.01em' }}>
               Export History
             </div>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-8 py-16">
         {/* Header Section */}
-        <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="text-center mb-16">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+               style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+            <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Export <span className="gradient-text">History</span>
+          <h1 className="text-5xl font-bold text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
+            Export <span style={{ color: '#22D3A5' }}>History</span>
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl max-w-4xl mx-auto" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             View all the birthdays you've exported to your calendar and received email reminders for.
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-            <div className="text-2xl font-bold text-pink-500 mb-2">{items.length}</div>
-            <div className="text-sm text-gray-600">Total Exports</div>
-          </div>
-          <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-            <div className="text-2xl font-bold text-pink-500 mb-2">
-              {items.length > 0 ? new Date(items[0].exported_at).toLocaleDateString() : '-'}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="backdrop-blur-sm rounded-3xl p-8 border text-center transition-all duration-500 hover:scale-105" 
+               style={{ 
+                 backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                 borderColor: 'rgba(255, 255, 255, 0.08)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+               }}>
+            <div className="text-4xl font-bold mb-4" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              {items.length}
             </div>
-            <div className="text-sm text-gray-600">Last Export</div>
+            <div className="font-medium text-white" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Total Exports</div>
           </div>
-          <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-            <div className="text-2xl font-bold text-pink-500 mb-2">
+          <div className="backdrop-blur-sm rounded-3xl p-8 border text-center transition-all duration-500 hover:scale-105" 
+               style={{ 
+                 backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                 borderColor: 'rgba(255, 255, 255, 0.08)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+               }}>
+            <div className="text-4xl font-bold mb-4" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              {items.length > 0 ? new Date(items[0].exported_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}
+            </div>
+            <div className="font-medium text-white" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Last Export</div>
+          </div>
+          <div className="backdrop-blur-sm rounded-3xl p-8 border text-center transition-all duration-500 hover:scale-105" 
+               style={{ 
+                 backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                 borderColor: 'rgba(255, 255, 255, 0.08)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+               }}>
+            <div className="text-4xl font-bold mb-4" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               {new Set(items.map(item => item.name)).size}
             </div>
-            <div className="text-sm text-gray-600">Unique People</div>
+            <div className="font-medium text-white" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Unique People</div>
           </div>
         </div>
 
         {/* Exported Items List */}
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="px-8 py-6 border-b border-gray-100 bg-gray-50/50">
-            <h3 className="text-xl font-bold text-gray-900">
-              Exported Birthdays ({items.length})
-            </h3>
+        <div className="backdrop-blur-sm rounded-3xl border overflow-hidden" 
+             style={{ 
+               backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+               borderColor: 'rgba(255, 255, 255, 0.08)',
+               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+             }}>
+          <div className="px-8 py-6 border-b" style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
+            <div className="flex justify-between items-center">
+              <h3 className="text-2xl font-bold text-white" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>
+                Exported Birthdays
+              </h3>
+              <span className="px-4 py-2 rounded-full text-sm font-medium border" 
+                    style={{ 
+                      background: 'rgba(0, 192, 139, 0.15)', 
+                      color: '#22D3A5',
+                      borderColor: 'rgba(0, 192, 139, 0.3)'
+                    }}>
+                {items.length} exports
+              </span>
+            </div>
           </div>
 
           {items.length === 0 ? (
-            <div className="px-8 py-16 text-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="px-8 py-24 text-center">
+              <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8" 
+                   style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                <svg className="w-12 h-12" style={{ color: 'rgba(255, 255, 255, 0.4)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">No exports yet</h4>
-              <p className="text-gray-600 mb-8 max-w-sm mx-auto">
+              <h4 className="text-3xl font-bold mb-6 text-white" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>No exports yet</h4>
+              <p className="mb-12 max-w-lg mx-auto text-xl leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                 Once you export birthdays from your dashboard, they'll appear here with their export history.
               </p>
               <button
                 onClick={() => router.push('/dashboard')}
-                className="btn-primary"
+                className="font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
+                style={{ 
+                  background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                  color: '#FFFFFF',
+                  boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
+                }}
               >
                 Go to Dashboard
               </button>
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div>
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="px-8 py-6 hover:bg-gray-50/50 transition-colors"
+                  className="px-8 py-6 transition-all duration-300 border-b last:border-b-0 hover:bg-white hover:bg-opacity-[0.02]"
+                  style={{ 
+                    borderBottomColor: 'rgba(255, 255, 255, 0.08)'
+                  }}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    <div className="flex items-center space-x-6">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg" 
+                           style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)' }}>
                         {item.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-gray-900">
+                        <h4 className="text-xl font-bold text-white mb-1" style={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
                           {item.name}
                         </h4>
-                        <p className="text-gray-600">
+                        <p className="text-lg mb-1" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                           Birthday: {new Date(item.date_of_birth).toLocaleDateString('en-US', {
                             month: 'long',
                             day: 'numeric',
@@ -170,7 +217,7 @@ export default function ExportedBacklog() {
                           })}
                         </p>
                         {item.notes && (
-                          <p className="text-sm text-gray-500 mt-1 italic">
+                          <p className="text-sm italic" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                             "{item.notes}"
                           </p>
                         )}
@@ -178,20 +225,20 @@ export default function ExportedBacklog() {
                     </div>
                     
                     <div className="text-right">
-                      <div className="flex items-center space-x-2 text-sm text-gray-500 mb-1">
+                      <div className="flex items-center space-x-2 text-sm mb-2" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>Exported</span>
                       </div>
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-lg font-bold text-white mb-1">
                         {new Date(item.exported_at).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric'
                         })}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                         {new Date(item.exported_at).toLocaleTimeString('en-US', {
                           hour: '2-digit',
                           minute: '2-digit'
@@ -207,12 +254,12 @@ export default function ExportedBacklog() {
 
         {/* Help Section */}
         {items.length > 0 && (
-          <div className="mt-12 bg-pink-50 rounded-3xl p-8 border border-pink-100">
+          <div className="mt-16 rounded-3xl p-8 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#22D3A5', fontWeight: 700, letterSpacing: '-0.01em' }}>
                 📧 Email Reminders Active
               </h3>
-              <p className="text-gray-600">
+              <p className="text-lg leading-relaxed" style={{ color: 'rgba(34, 211, 165, 0.8)' }}>
                 You'll receive email reminders for these birthdays automatically. 
                 New exports will also appear here for your records.
               </p>

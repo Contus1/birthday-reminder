@@ -31,99 +31,251 @@ export default function Home() {
     if (error) console.error('Error logging out:', error);
     else {
       setIsAuthenticated(false);
-      // Optionally redirect to login page
-      // router.push('/login');
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-white">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-pink-200 border-t-pink-500"></div>
-          <p className="text-gray-600 animate-pulse">Loading...</p>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0A0A0A' }}>
+        <div className="flex flex-col items-center space-y-8">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-20 w-20 border-4 border-[#1A1A1A] border-t-[#00C08B]"></div>
+            <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.1) 0%, rgba(0, 176, 213, 0.1) 100%)' }}></div>
+          </div>
+          <p className="text-white text-xl font-medium animate-pulse" style={{ fontWeight: 500, letterSpacing: '-0.02em' }}>Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-white overflow-hidden">
+    <main className="min-h-screen overflow-hidden" style={{ backgroundColor: '#0A0A0A' }}>
+      {/* Animated Bubbles Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {/* Bubble 1 */}
+        <div 
+          className="absolute rounded-full animate-float-slow opacity-20 blur-3xl"
+          style={{
+            width: '300px',
+            height: '300px',
+            background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.4) 0%, rgba(0, 176, 213, 0.4) 100%)',
+            top: '10%',
+            left: '5%',
+            animationDelay: '0s',
+            animationDuration: '20s'
+          }}
+        ></div>
+        
+        {/* Bubble 2 */}
+        <div 
+          className="absolute rounded-full animate-float-medium opacity-15 blur-3xl"
+          style={{
+            width: '400px',
+            height: '400px',
+            background: 'linear-gradient(135deg, rgba(34, 211, 165, 0.3) 0%, rgba(0, 192, 139, 0.3) 100%)',
+            top: '20%',
+            right: '10%',
+            animationDelay: '5s',
+            animationDuration: '25s'
+          }}
+        ></div>
+        
+        {/* Bubble 3 */}
+        <div 
+          className="absolute rounded-full animate-float-fast opacity-25 blur-2xl"
+          style={{
+            width: '200px',
+            height: '200px',
+            background: 'linear-gradient(135deg, rgba(0, 176, 213, 0.5) 0%, rgba(34, 211, 165, 0.5) 100%)',
+            top: '60%',
+            left: '15%',
+            animationDelay: '10s',
+            animationDuration: '15s'
+          }}
+        ></div>
+        
+        {/* Bubble 4 */}
+        <div 
+          className="absolute rounded-full animate-float-slow opacity-20 blur-3xl"
+          style={{
+            width: '350px',
+            height: '350px',
+            background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.3) 0%, rgba(0, 176, 213, 0.3) 100%)',
+            bottom: '10%',
+            right: '5%',
+            animationDelay: '15s',
+            animationDuration: '22s'
+          }}
+        ></div>
+        
+        {/* Bubble 5 */}
+        <div 
+          className="absolute rounded-full animate-float-medium opacity-15 blur-3xl"
+          style={{
+            width: '250px',
+            height: '250px',
+            background: 'linear-gradient(135deg, rgba(34, 211, 165, 0.4) 0%, rgba(0, 192, 139, 0.4) 100%)',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            animationDelay: '8s',
+            animationDuration: '18s'
+          }}
+        ></div>
+        
+        {/* Bubble 6 */}
+        <div 
+          className="absolute rounded-full animate-float-fast opacity-10 blur-3xl"
+          style={{
+            width: '180px',
+            height: '180px',
+            background: 'linear-gradient(135deg, rgba(0, 176, 213, 0.6) 0%, rgba(34, 211, 165, 0.6) 100%)',
+            bottom: '30%',
+            left: '30%',
+            animationDelay: '3s',
+            animationDuration: '12s'
+          }}
+        ></div>
+        
+        {/* Bubble 7 */}
+        <div 
+          className="absolute rounded-full animate-float-slow opacity-20 blur-2xl"
+          style={{
+            width: '320px',
+            height: '320px',
+            background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.3) 0%, rgba(34, 211, 165, 0.3) 100%)',
+            top: '5%',
+            right: '40%',
+            animationDelay: '12s',
+            animationDuration: '28s'
+          }}
+        ></div>
+        
+        {/* Bubble 8 */}
+        <div 
+          className="absolute rounded-full animate-float-medium opacity-15 blur-3xl"
+          style={{
+            width: '280px',
+            height: '280px',
+            background: 'linear-gradient(135deg, rgba(0, 176, 213, 0.4) 0%, rgba(0, 192, 139, 0.4) 100%)',
+            bottom: '40%',
+            right: '20%',
+            animationDelay: '6s',
+            animationDuration: '20s'
+          }}
+        ></div>
+      </div>
+
       {/* Navigation */}
-      <nav className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
-        <div className="flex justify-between items-center">
-          <div className="text-2xl font-bold text-gray-900 animate-fade-in">
-            Birthday<span className="text-pink-500">Reminder</span>
-          </div>
-          
-          <div className="flex items-center space-x-4 animate-fade-in">
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => router.push('/dashboard')}
-                  className="btn-outline"
-                >
-                  Dashboard
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="btn-secondary"
-                >
-                  Logout
-                </button>
+      <nav className="backdrop-blur-xl border-b sticky top-0 z-50" style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
+        <div className="max-w-7xl mx-auto px-8 py-6">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)' }}>
+                <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
               </div>
-            ) : (
-              <>
-                <button
-                  onClick={() => router.push('/login')}
-                  className="btn-outline"
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={() => router.push('/signup')}
-                  className="btn-primary"
-                >
-                  Sign Up
-                </button>
-              </>
-            )}
+              <h1 className="text-2xl font-bold text-white" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>
+                Birthday<span style={{ color: '#22D3A5' }}>Reminder</span>
+              </h1>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => router.push('/dashboard')}
+                    className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 border"
+                    style={{ 
+                      borderColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    Dashboard
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                      boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => router.push('/login')}
+                    className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 border"
+                    style={{ 
+                      borderColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    onClick={() => router.push('/signup')}
+                    className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                      boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
+                    }}
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative px-6 py-20 max-w-6xl mx-auto text-center">
-        {/* Background decoration */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-          <div className="absolute top-0 right-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-        </div>
-
+      <section className="relative px-8 py-32 max-w-7xl mx-auto text-center z-10">
         <div className="relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight animate-fade-in-up">
-            Welcome to{' '}
-            <span className="gradient-text">Birthday</span>
-            <span className="text-gray-900">Reminder</span>
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-12 leading-[0.9]" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>
+            Never Miss a{' '}
+            <br />
+            <span style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Birthday
+            </span>{' '}
+            Again
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto font-light animate-fade-in-up text-balance" style={{animationDelay: '0.2s'}}>
-            The easiest way to collect, manage and never miss your friends' birthdays. 
-            Simply generate a shareable link, let everyone add their date, and export a 
-            ready-to-import calendar file with one click. Finally, sit back and let automatic 
-            email reminders keep you on track!
+          <p className="text-2xl leading-relaxed max-w-5xl mx-auto mb-16" style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 400, lineHeight: 1.6 }}>
+            The easiest way to collect, manage and track your friends' birthdays. 
+            Generate shareable links, let everyone add their dates, and export calendar files 
+            with automatic email reminders. Simple, efficient, never forgotten.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{animationDelay: '0.4s'}}>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button
               onClick={handleGetStarted}
-              className="btn-primary text-lg px-12 py-5 shadow-2xl shadow-pink-500/25"
+              className="px-12 py-5 text-xl font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
+              style={{ 
+                background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                color: '#FFFFFF',
+                boxShadow: '0 8px 32px rgba(0, 192, 139, 0.4)'
+              }}
             >
               Get Started Free
             </button>
             
-            <button className="btn-outline text-lg px-8 py-5">
+            <button 
+              onClick={() => {
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-8 py-5 text-xl font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105"
+              style={{ 
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'rgba(255, 255, 255, 0.9)',
+                backgroundColor: 'transparent'
+              }}
+            >
               See How It Works
             </button>
           </div>
@@ -131,48 +283,83 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="px-6 py-24 bg-gradient-to-b from-white to-gray-50">
+      <section id="how-it-works" className="px-8 py-32 relative z-10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up">
-              How it works
+          <div className="text-center mb-24">
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium mb-8 border" 
+                 style={{ 
+                   background: 'rgba(0, 192, 139, 0.1)', 
+                   color: '#22D3A5',
+                   borderColor: 'rgba(0, 192, 139, 0.2)'
+                 }}>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+              <span>How It Works</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
+              Three Simple Steps
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up" style={{animationDelay: '0.1s'}}>
-              Three simple steps to never forget a birthday again
+            <p className="text-xl max-w-4xl mx-auto" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+              From setup to celebration - it's that easy
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-3 gap-12">
             {/* Step 1 */}
-            <div className="feature-card text-center animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-pink-500">1</span>
+            <div className="backdrop-blur-sm rounded-3xl p-12 border transition-all duration-500 hover:scale-105 text-center group" 
+                 style={{ 
+                   backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                   borderColor: 'rgba(255, 255, 255, 0.08)',
+                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                 }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300" 
+                   style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+                <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Generate Link</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Create a shareable link in seconds and send it to your friends and family.
+              <h3 className="text-2xl font-bold text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Generate Link</h3>
+              <p className="text-lg leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                Create a secure shareable link in seconds and send it to your friends and family.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="feature-card text-center animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-pink-500">2</span>
+            <div className="backdrop-blur-sm rounded-3xl p-12 border transition-all duration-500 hover:scale-105 text-center group" 
+                 style={{ 
+                   backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                   borderColor: 'rgba(255, 255, 255, 0.08)',
+                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                 }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300" 
+                   style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+                <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Collect Birthdays</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Everyone adds their birthday through your link - no registration required.
+              <h3 className="text-2xl font-bold text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Collect Birthdays</h3>
+              <p className="text-lg leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                Everyone adds their birthday through your link - no registration or app downloads required.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="feature-card text-center animate-fade-in-up" style={{animationDelay: '0.4s'}}>
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-pink-500">3</span>
+            <div className="backdrop-blur-sm rounded-3xl p-12 border transition-all duration-500 hover:scale-105 text-center group" 
+                 style={{ 
+                   backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                   borderColor: 'rgba(255, 255, 255, 0.08)',
+                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                 }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300" 
+                   style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+                <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM4.828 7l2.828 2.828M9 11a3 3 0 100-6 3 3 0 000 6zm-7 4a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 9H16a2 2 0 012 2v9a2 2 0 01-2 2H8.07a2 2 0 01-1.664-.89L5.594 20.11A2 2 0 014 19.17V15z" />
+                </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Never Forget</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Export to your calendar and get automatic email reminders before each birthday.
+              <h3 className="text-2xl font-bold text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Never Forget</h3>
+              <p className="text-lg leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                Export to your calendar and receive automatic email reminders before each special day.
               </p>
             </div>
           </div>
@@ -180,37 +367,94 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="px-6 py-24 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in-up">
-            Ready to get started?
-          </h2>
-          <p className="text-xl text-gray-300 mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
-            Join thousands of people who never miss a birthday anymore.
-          </p>
-          <button
-            onClick={handleGetStarted}
-            className="btn-primary text-lg px-12 py-5 shadow-2xl shadow-pink-500/25 animate-fade-in-up"
-            style={{animationDelay: '0.2s'}}
-          >
-            Start for Free
-          </button>
+      <section className="px-8 py-32 relative z-10">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="backdrop-blur-sm rounded-3xl p-16 border" 
+               style={{ 
+                 backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                 borderColor: 'rgba(255, 255, 255, 0.08)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+               }}>
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
+              Ready to Get Started?
+            </h2>
+            <p className="text-2xl mb-12" style={{ color: 'rgba(255, 255, 255, 0.7)', lineHeight: 1.6 }}>
+              Join thousands who never miss a birthday anymore. 
+              Start collecting today - it's completely free.
+            </p>
+            <button
+              onClick={handleGetStarted}
+              className="px-12 py-5 text-xl font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
+              style={{ 
+                background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                color: '#FFFFFF',
+                boxShadow: '0 8px 32px rgba(0, 192, 139, 0.4)'
+              }}
+            >
+              Start for Free
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-16 bg-gray-900 text-white border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
+      <footer className="backdrop-blur-sm border-t relative z-10" style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderTopColor: 'rgba(255, 255, 255, 0.08)' }}>
+        <div className="max-w-7xl mx-auto px-8 py-16">
           <div className="text-center">
-            <div className="text-2xl font-bold mb-4">
-              Birthday<span className="text-pink-500">Reminder</span>
+            <div className="flex items-center justify-center space-x-3 mb-6">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)' }}>
+                <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <div className="text-2xl font-bold text-white" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>
+                Birthday<span style={{ color: '#22D3A5' }}>Reminder</span>
+              </div>
             </div>
-            <p className="text-gray-400">
-              © 2025 BirthdayReminder. Never miss a birthday again. By Carl Lichtl
+            <p className="text-lg mb-2 text-white" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+              © 2025 BirthdayReminder. Never miss a birthday again.
+            </p>
+            <p style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+              Crafted with love in Madrid by <span style={{ color: '#22D3A5' }}>Carl Lichtl</span>
             </p>
           </div>
         </div>
       </footer>
+
+      <style jsx>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(30px, -30px) rotate(90deg); }
+          50% { transform: translate(-20px, -60px) rotate(180deg); }
+          75% { transform: translate(-40px, -20px) rotate(270deg); }
+        }
+        
+        @keyframes float-medium {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(-50px, -40px) rotate(120deg) scale(1.1); }
+          66% { transform: translate(40px, -80px) rotate(240deg) scale(0.9); }
+        }
+        
+        @keyframes float-fast {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          20% { transform: translate(60px, -20px) rotate(72deg) scale(1.2); }
+          40% { transform: translate(-30px, -70px) rotate(144deg) scale(0.8); }
+          60% { transform: translate(-70px, -10px) rotate(216deg) scale(1.1); }
+          80% { transform: translate(20px, -50px) rotate(288deg) scale(0.9); }
+        }
+        
+        .animate-float-slow {
+          animation: float-slow infinite ease-in-out;
+        }
+        
+        .animate-float-medium {
+          animation: float-medium infinite ease-in-out;
+        }
+        
+        .animate-float-fast {
+          animation: float-fast infinite ease-in-out;
+        }
+      `}</style>
     </main>
   );
 }

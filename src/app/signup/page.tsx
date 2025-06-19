@@ -54,73 +54,70 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-gray-50">
-      {/* Background decoration */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute top-0 left-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 right-20 w-72 h-72 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-blob animation-delay-3000"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-green-100 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-1000"></div>
-        <div className="absolute top-2/3 left-1/2 w-56 h-56 bg-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-blob animation-delay-5000"></div>
-      </div>
-
+    <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }}>
       <div className="flex flex-col min-h-screen">
         {/* Main Content */}
         <main className="flex-1 flex items-center justify-center px-6 py-12">
-          <div className="w-full max-w-md relative z-10">
+          <div className="w-full max-w-md">
             {/* Header */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-12">
               <button
                 onClick={() => router.push('/')}
-                className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors mb-6"
+                className="inline-flex items-center space-x-2 transition-colors mb-8 hover:text-white"
+                style={{ color: 'rgba(255, 255, 255, 0.7)' }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span>Back to Home</span>
+                <span className="font-medium">Back to Home</span>
               </button>
               
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in">
-                <svg className="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+                   style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+                <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
               </div>
               
-              <h1 className="text-3xl font-bold text-gray-900 mb-2 animate-fade-in-up">Create Account</h1>
-              <p className="text-gray-600 animate-fade-in-up" style={{animationDelay: '0.1s'}}>Join BirthdayReminder and never miss a celebration</p>
+              <h1 className="text-4xl font-bold text-white mb-4" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Create Account</h1>
+              <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Join BirthdayReminder and never miss a celebration</p>
             </div>
 
             {/* Signup Form */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200 p-8 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+            <div className="backdrop-blur-sm rounded-3xl p-10 border" 
+                 style={{ 
+                   backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+                   borderColor: 'rgba(255, 255, 255, 0.08)',
+                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                 }}>
               <form onSubmit={handleSignup} className="space-y-6">
                 {/* Error Message */}
                 {error && (
-                  <div className="bg-red-50 border border-red-200 rounded-xl p-4 animate-fade-in">
+                  <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(255, 107, 107, 0.1)', borderColor: 'rgba(255, 107, 107, 0.2)' }}>
                     <div className="flex items-center space-x-3">
-                      <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="text-red-700 text-sm font-medium">{error}</p>
+                      <p className="text-sm font-medium" style={{ color: '#FF6B6B' }}>{error}</p>
                     </div>
                   </div>
                 )}
 
                 {/* Success Message */}
                 {message && (
-                  <div className="bg-green-50 border border-green-200 rounded-xl p-4 animate-fade-in">
+                  <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
                     <div className="flex items-center space-x-3">
-                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="text-green-700 text-sm font-medium">{message}</p>
+                      <p className="text-sm font-medium" style={{ color: '#22D3A5' }}>{message}</p>
                     </div>
                   </div>
                 )}
 
                 {/* Email Field */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-900">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Email Address
                   </label>
                   <input
@@ -130,13 +127,17 @@ export default function SignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white/70 backdrop-blur-sm"
+                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    style={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                      borderColor: 'rgba(255, 255, 255, 0.2)',
+                    }}
                   />
                 </div>
 
                 {/* Password Field */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-900">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Password
                   </label>
                   <input
@@ -146,14 +147,18 @@ export default function SignupPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white/70 backdrop-blur-sm"
+                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    style={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                      borderColor: 'rgba(255, 255, 255, 0.2)',
+                    }}
                   />
-                  <p className="text-xs text-gray-500">Minimum 6 characters</p>
+                  <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Minimum 6 characters</p>
                 </div>
 
                 {/* Confirm Password Field */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-900">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Confirm Password
                   </label>
                   <input
@@ -163,13 +168,17 @@ export default function SignupPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={loading}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white/70 backdrop-blur-sm"
+                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    style={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                      borderColor: 'rgba(255, 255, 255, 0.2)',
+                    }}
                   />
                 </div>
 
                 {/* Terms Notice */}
-                <div className="bg-gray-50/80 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
-                  <p className="text-xs text-gray-600 leading-relaxed">
+                <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                     By creating an account, you agree to our terms of service and privacy policy. 
                     We'll help you never miss a birthday again! 🎉
                   </p>
@@ -179,7 +188,12 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading || !email || !password || !confirmPassword}
-                  className="w-full btn-primary py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
+                    color: '#FFFFFF',
+                    boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
+                  }}
                 >
                   {loading ? (
                     <div className="flex items-center justify-center space-x-2">
@@ -194,56 +208,28 @@ export default function SignupPage() {
 
               {/* Divider */}
               <div className="my-8 flex items-center">
-                <div className="flex-1 border-t border-gray-200"></div>
-                <span className="px-4 text-sm text-gray-500">Already have an account?</span>
-                <div className="flex-1 border-t border-gray-200"></div>
+                <div className="flex-1 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)' }}></div>
+                <span className="px-4 text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Already have an account?</span>
+                <div className="flex-1 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)' }}></div>
               </div>
 
               {/* Login Link */}
               <button
                 onClick={() => router.push('/login')}
-                className="w-full btn-outline py-4 text-lg"
+                className="w-full py-4 text-lg font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105"
+                style={{ 
+                  borderColor: 'rgba(255, 255, 255, 0.2)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  backgroundColor: 'transparent'
+                }}
               >
                 Sign In Instead
               </button>
             </div>
 
-            {/* Benefits */}
-            <div className="mt-8 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-              <div className="grid grid-cols-1 gap-3">
-                <div className="flex items-center space-x-3 text-sm text-gray-600">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></div>
-                  <span>Generate shareable birthday collection links</span>
-                </div>
-                <div className="flex items-center space-x-3 text-sm text-gray-600">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse animation-delay-1000"></div>
-                  <span>Export birthdays to your calendar automatically</span>
-                </div>
-                <div className="flex items-center space-x-3 text-sm text-gray-600">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse animation-delay-2000"></div>
-                  <span>Receive email reminders before each birthday</span>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </main>
-
-        {/* Footer */}
-        <footer className="bg-gray-900 text-white border-t border-gray-800 relative z-10">
-          <div className="max-w-6xl mx-auto px-6 py-12">
-            <div className="text-center">
-              <div className="text-2xl font-bold mb-4">
-                Birthday<span className="text-pink-500">Reminder</span>
-              </div>
-              <p className="text-gray-400">
-                © 2025 BirthdayReminder. Never miss a birthday again.
-              </p>
-              <p className="text-gray-500 text-sm mt-2">
-                Created by Carl Lichtl
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );
