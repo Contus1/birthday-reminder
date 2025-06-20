@@ -33,23 +33,52 @@ export default function SignupPage() {
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({ 
-      email, 
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`
+    try {
+      // Check if user already exists by attempting to sign in
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: 'dummy-password-check'
+      });
+
+      // If sign in succeeds or fails with "Invalid login credentials", user exists
+      if (signInData?.user || (signInError && signInError.message.includes('Invalid login credentials'))) {
+        setError('An account with this email already exists. Please sign in instead.');
+        setLoading(false);
+        return;
       }
-    });
 
-    setLoading(false);
+      // If we get here, user doesn't exist, proceed with signup
+      const { data, error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`
+        }
+      });
 
-    if (error) {
-      setError(error.message);
-    } else if (data.user && !data.user.email_confirmed_at) {
-      setMessage('Please check your email to confirm your account before logging in.');
-    } else {
-      // User is signed up and confirmed, redirect to dashboard
-      router.push('/dashboard');
+      setLoading(false);
+
+      if (error) {
+        // Handle specific signup errors
+        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+          setError('An account with this email already exists. Please sign in instead.');
+        } else if (error.message.includes('Password should be at least 6 characters')) {
+          setError('Password must be at least 6 characters long');
+        } else if (error.message.includes('Invalid email')) {
+          setError('Please enter a valid email address');
+        } else {
+          setError(error.message);
+        }
+      } else if (data.user && !data.user.email_confirmed_at) {
+        setMessage('Please check your email to confirm your account before logging in.');
+      } else {
+        // User is signed up and confirmed, redirect to dashboard
+        router.push('/dashboard');
+      }
+    } catch (err) {
+      setLoading(false);
+      setError('An unexpected error occurred. Please try again.');
+      console.error('Signup error:', err);
     }
   };
 
@@ -98,7 +127,19 @@ export default function SignupPage() {
                       <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="text-sm font-medium" style={{ color: '#FF6B6B' }}>{error}</p>
+                      <div>
+                        <p className="text-sm font-medium" style={{ color: '#FF6B6B' }}>{error}</p>
+                        {error.includes('already exists') && (
+                          <button
+                            type="button"
+                            onClick={() => router.push('/login')}
+                            className="text-xs underline mt-1 hover:opacity-80 transition-opacity"
+                            style={{ color: '#FF6B6B' }}
+                          >
+                            Go to Sign In →
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -110,7 +151,12 @@ export default function SignupPage() {
                       <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="text-sm font-medium" style={{ color: '#22D3A5' }}>{message}</p>
+                      <div>
+                        <p className="text-sm font-medium" style={{ color: '#22D3A5' }}>{message}</p>
+                        <p className="text-xs mt-1" style={{ color: 'rgba(34, 211, 165, 0.7)' }}>
+                          Check your spam folder if you don't see the confirmation email.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -125,7 +171,7 @@ export default function SignupPage() {
                     required
                     placeholder="Enter your email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value.toLowerCase().trim())}
                     disabled={loading}
                     className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
                     style={{ 
@@ -153,7 +199,12 @@ export default function SignupPage() {
                       borderColor: 'rgba(255, 255, 255, 0.2)',
                     }}
                   />
-                  <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Minimum 6 characters</p>
+                  <div className="flex items-center space-x-2">
+                    <div className={`w-2 h-2 rounded-full transition-colors ${password.length >= 6 ? 'bg-green-400' : 'bg-gray-600'}`}></div>
+                    <p className="text-xs" style={{ color: password.length >= 6 ? '#22D3A5' : 'rgba(255, 255, 255, 0.5)' }}>
+                      Minimum 6 characters {password.length >= 6 ? '✓' : ''}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Confirm Password Field */}
@@ -174,6 +225,14 @@ export default function SignupPage() {
                       borderColor: 'rgba(255, 255, 255, 0.2)',
                     }}
                   />
+                  {confirmPassword && (
+                    <div className="flex items-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full transition-colors ${password === confirmPassword ? 'bg-green-400' : 'bg-red-400'}`}></div>
+                      <p className="text-xs" style={{ color: password === confirmPassword ? '#22D3A5' : '#FF6B6B' }}>
+                        {password === confirmPassword ? 'Passwords match ✓' : 'Passwords do not match'}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Terms Notice */}
@@ -187,7 +246,7 @@ export default function SignupPage() {
                 {/* Signup Button */}
                 <button
                   type="submit"
-                  disabled={loading || !email || !password || !confirmPassword}
+                  disabled={loading || !email || !password || !confirmPassword || password !== confirmPassword}
                   className="w-full py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   style={{ 
                     background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
@@ -198,7 +257,7 @@ export default function SignupPage() {
                   {loading ? (
                     <div className="flex items-center justify-center space-x-2">
                       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                      <span>Creating Account...</span>
+                      <span>Checking Email...</span>
                     </div>
                   ) : (
                     'Create Account'
@@ -226,8 +285,6 @@ export default function SignupPage() {
                 Sign In Instead
               </button>
             </div>
-
-            
           </div>
         </main>
       </div>

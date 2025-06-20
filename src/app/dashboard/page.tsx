@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '../supabaseClient';
 import { customAlphabet } from 'nanoid';
 import ExportSuccessPopup from '../components/ExportSuccessPopup';
+import ProfileDropdown from '../components/ProfileDropdown';
 
 // 8-char alphanumeric ID
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
@@ -23,6 +24,7 @@ export default function Dashboard() {
   // birthdays list
   const [birthdays, setBirthdays] = useState<Birthday[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   // invite UI
   const [inviteLink, setInviteLink] = useState<string | null>(null);
@@ -86,6 +88,7 @@ export default function Dashboard() {
         return;
       }
 
+      setUserEmail(session.user.email || null);
       const userId = session.user.id;
       const { data, error } = await supabase
         .from('birthdays')
@@ -203,16 +206,7 @@ export default function Dashboard() {
                   </svg>
                   <span className="hidden md:inline font-medium">Back to Home</span>
                 </button>
-                <button
-                  onClick={handleLogout}
-                  className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
-                    boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
-                  }}
-                >
-                  Logout
-                </button>
+                <ProfileDropdown userEmail={userEmail} />
               </div>
             </div>
           </div>

@@ -3,16 +3,19 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from './supabaseClient';
+import ProfileDropdown from './components/ProfileDropdown';
 
 export default function Home() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setIsAuthenticated(!!session);
+      setUserEmail(session?.user?.email || null);
       setLoading(false);
     };
     checkAuth();
@@ -22,7 +25,7 @@ export default function Home() {
     if (isAuthenticated) {
       router.push('/dashboard');
     } else {
-      router.push('/login');
+      router.push('/signup');
     }
   };
 
@@ -31,6 +34,7 @@ export default function Home() {
     if (error) console.error('Error logging out:', error);
     else {
       setIsAuthenticated(false);
+      setUserEmail(null);
     }
   };
 
@@ -50,7 +54,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden" style={{ backgroundColor: '#0A0A0A' }}>
-      {/* Animated Bubbles Background */}
+      {/* Animated Bubbles Background - keeping existing bubbles code */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {/* Bubble 1 */}
         <div 
@@ -194,16 +198,7 @@ export default function Home() {
                   >
                     Dashboard
                   </button>
-                  <button
-                    onClick={handleLogout}
-                    className="px-6 py-3 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                    style={{ 
-                      background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
-                      boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
-                    }}
-                  >
-                    Logout
-                  </button>
+                  <ProfileDropdown userEmail={userEmail} />
                 </div>
               ) : (
                 <>
@@ -249,7 +244,7 @@ export default function Home() {
           <p className="text-2xl leading-relaxed max-w-5xl mx-auto mb-16" style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 400, lineHeight: 1.6 }}>
             The easiest way to collect, manage and track your friends' birthdays. 
             Generate shareable links, let everyone add their dates, and export calendar files 
-            with automatic email reminders. Simple, efficient, never forgotten.
+            and get it send via email. Simple, efficient, never forgotten.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -359,7 +354,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Never Forget</h3>
               <p className="text-lg leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Export to your calendar and receive automatic email reminders before each special day.
+                Export to your calendar and receive it via email.
               </p>
             </div>
           </div>
@@ -415,7 +410,7 @@ export default function Home() {
               © 2025 BirthdayReminder. Never miss a birthday again.
             </p>
             <p style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-              Crafted with love in Madrid by <span style={{ color: '#22D3A5' }}>Carl Lichtl</span>
+              Builed with love in Madrid by <span style={{ color: '#22D3A5' }}>Carl Lichtl</span>
             </p>
           </div>
         </div>
