@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../supabaseClient';
 import { customAlphabet } from 'nanoid';
 import ProfileDropdown from '../components/ProfileDropdown';
+import ExportSuccessPopup from '../components/ExportSuccessPopup';
 
 // 8-char alphanumeric ID
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
@@ -19,6 +20,7 @@ type Birthday = {
 
 export default function Dashboard() {
   const router = useRouter();
+  const inviteLinkRef = useRef<HTMLDivElement>(null);
 
   // birthdays list
   const [birthdays, setBirthdays] = useState<Birthday[]>([]);
@@ -73,6 +75,14 @@ export default function Dashboard() {
     }
 
     setInviteLink(`${window.location.origin}/invite/${code}`);
+    
+    // Smooth scroll to invite link section after a short delay
+    setTimeout(() => {
+      inviteLinkRef.current?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+    }, 100);
   };
 
   // fetch your birthdays
@@ -149,8 +159,9 @@ export default function Dashboard() {
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
+    
+    // Show the popup instead of inline success message
     setShowExportSuccess(true);
-    setTimeout(() => setShowExportSuccess(false), 5000);
   };
 
   if (loading) {
@@ -296,7 +307,7 @@ export default function Dashboard() {
 
         {/* Invite Link Display */}
         {inviteLink && (
-          <div className="mb-8 sm:mb-12 md:mb-16">
+          <div ref={inviteLinkRef} className="mb-8 sm:mb-12 md:mb-16">
             <div className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border" 
                  style={{ 
                    backgroundColor: 'rgba(34, 211, 165, 0.1)', 
@@ -308,7 +319,7 @@ export default function Dashboard() {
               <p className="text-sm sm:text-base mb-4 sm:mb-6" style={{ color: 'rgba(34, 211, 165, 0.8)' }}>
                 Share this link with friends and family so they can add their birthdays:
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div className="flex-1 px-3 py-3 sm:px-4 sm:py-4 rounded-xl border text-sm sm:text-base font-mono break-all" 
                      style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(34, 211, 165, 0.3)', color: '#22D3A5' }}>
                   {inviteLink}
@@ -325,31 +336,28 @@ export default function Dashboard() {
                   {copied ? '✓ Copied!' : 'Copy Link'}
                 </button>
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* Export Success Popup */}
-        {showExportSuccess && (
-          <div className="mb-8 sm:mb-12 md:mb-16">
-            <div className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border" 
-                 style={{ 
-                   backgroundColor: 'rgba(34, 211, 165, 0.1)', 
-                   borderColor: 'rgba(34, 211, 165, 0.2)'
-                 }}>
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#22D3A5' }}>
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold" style={{ color: '#22D3A5', fontWeight: 700 }}>
-                    Export Successful! 📧
-                  </h3>
-                  <p className="text-sm sm:text-base" style={{ color: 'rgba(34, 211, 165, 0.8)' }}>
-                    Calendar file downloaded and email sent with your birthdays!
-                  </p>
+              {/* Pro Tip Section */}
+              <div className="rounded-xl p-4 sm:p-6 border" 
+                   style={{ 
+                     backgroundColor: 'rgba(34, 211, 165, 0.15)', 
+                     borderColor: 'rgba(34, 211, 165, 0.3)'
+                   }}>
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0" 
+                       style={{ backgroundColor: '#22D3A5' }}>
+                    <span className="text-base sm:text-lg">💡</span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-base sm:text-lg font-bold mb-2 sm:mb-3" style={{ color: '#22D3A5', fontWeight: 700, letterSpacing: '-0.01em' }}>
+                      Pro tip:
+                    </h4>
+                    <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(34, 211, 165, 0.9)' }}>
+                      Share this in your group chat, let everyone add their birthdays, then export 
+                      and share the calendar back to keep everyone connected! 
+                      <span className="inline-block ml-1">🎉</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -475,6 +483,12 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+
+      {/* Export Success Popup */}
+      <ExportSuccessPopup 
+        isOpen={showExportSuccess} 
+        onClose={() => setShowExportSuccess(false)} 
+      />
     </div>
   );
 }
