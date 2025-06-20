@@ -53,13 +53,13 @@ export default function InvitePage() {
   // Loading State
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0A0A0A' }}>
-        <div className="flex flex-col items-center space-y-8">
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: '#0A0A0A' }}>
+        <div className="flex flex-col items-center space-y-6 sm:space-y-8">
           <div className="relative">
-            <div className="animate-spin rounded-full h-20 w-20 border-4 border-[#1A1A1A] border-t-[#00C08B]"></div>
+            <div className="animate-spin rounded-full h-16 w-16 sm:h-20 sm:w-20 border-4 border-[#1A1A1A] border-t-[#00C08B]"></div>
             <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(0, 192, 139, 0.1) 0%, rgba(0, 176, 213, 0.1) 100%)' }}></div>
           </div>
-          <p className="text-white text-xl font-medium animate-pulse" style={{ fontWeight: 500, letterSpacing: '-0.02em' }}>Loading your invitation...</p>
+          <p className="text-white text-lg sm:text-xl font-medium animate-pulse text-center" style={{ fontWeight: 500, letterSpacing: '-0.02em' }}>Loading your invitation...</p>
         </div>
       </div>
     );
@@ -68,22 +68,22 @@ export default function InvitePage() {
   // Error State
   if (status === 'error') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: '#0A0A0A' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8" style={{ backgroundColor: '#0A0A0A' }}>
         <div className="w-full max-w-md text-center">
-          <div className="backdrop-blur-sm rounded-3xl p-12 border" 
+          <div className="backdrop-blur-sm rounded-3xl p-8 sm:p-12 border" 
                style={{ 
                  backgroundColor: 'rgba(255, 255, 255, 0.02)', 
                  borderColor: 'rgba(255, 255, 255, 0.08)',
                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
                }}>
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8" 
                  style={{ background: 'rgba(255, 107, 107, 0.15)' }}>
-              <svg className="w-10 h-10" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>Oops! Something went wrong</h1>
-            <p className="text-lg mb-8 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6 leading-tight" style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>Oops! Something went wrong</h1>
+            <p className="text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
               This invitation link seems to be invalid or may have expired. 
               Please check with your friend for a new link.
             </p>
@@ -99,67 +99,67 @@ export default function InvitePage() {
   // Success State
   if (status === 'sent') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: '#0A0A0A' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8" style={{ backgroundColor: '#0A0A0A' }}>
         <div className="w-full max-w-md text-center">
-          <div className="backdrop-blur-sm rounded-3xl p-12 border" 
+          <div className="backdrop-blur-sm rounded-3xl p-8 sm:p-12 border" 
                style={{ 
                  backgroundColor: 'rgba(255, 255, 255, 0.02)', 
                  borderColor: 'rgba(255, 255, 255, 0.08)',
                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
                }}>
             {/* Success Icon */}
-            <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8" 
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8" 
                  style={{ background: 'rgba(34, 211, 165, 0.15)' }}>
-              <svg className="w-12 h-12" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-10 h-10 sm:w-12 sm:h-12" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
 
             {/* Success Message */}
-            <h1 className="text-4xl font-bold text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Perfect! 🎉</h1>
-            <p className="text-lg mb-8 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Perfect! 🎉</h1>
+            <p className="text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
               Your birthday has been safely added! Your friend will now get reminded 
               so they never miss your special day.
             </p>
 
             {/* Celebration Elements */}
-            <div className="flex justify-center space-x-3 mb-8">
-              <span className="text-3xl animate-bounce">🎂</span>
-              <span className="text-3xl animate-bounce" style={{ animationDelay: '0.1s' }}>🎈</span>
-              <span className="text-3xl animate-bounce" style={{ animationDelay: '0.2s' }}>🎊</span>
+            <div className="flex justify-center space-x-3 mb-6 sm:mb-8">
+              <span className="text-2xl sm:text-3xl animate-bounce">🎂</span>
+              <span className="text-2xl sm:text-3xl animate-bounce" style={{ animationDelay: '0.1s' }}>🎈</span>
+              <span className="text-2xl sm:text-3xl animate-bounce" style={{ animationDelay: '0.2s' }}>🎊</span>
             </div>
 
             {/* Next Steps */}
-            <div className="rounded-2xl p-6 border mb-8" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
-              <h3 className="text-xl font-bold mb-4" style={{ color: '#22D3A5', fontWeight: 700, letterSpacing: '-0.01em' }}>What happens next?</h3>
-              <div className="space-y-3 text-base" style={{ color: 'rgba(34, 211, 165, 0.9)' }}>
+            <div className="rounded-2xl p-4 sm:p-6 border mb-6 sm:mb-8" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
+              <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4" style={{ color: '#22D3A5', fontWeight: 700, letterSpacing: '-0.01em' }}>What happens next?</h3>
+              <div className="space-y-2 sm:space-y-3 text-sm sm:text-base" style={{ color: 'rgba(34, 211, 165, 0.9)' }}>
                 <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#22D3A5' }}></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full flex-shrink-0" style={{ backgroundColor: '#22D3A5' }}></div>
                   <span>Your friend gets notified about your birthday</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#22D3A5' }}></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full flex-shrink-0" style={{ backgroundColor: '#22D3A5' }}></div>
                   <span>They'll receive reminders before your special day</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#22D3A5' }}></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full flex-shrink-0" style={{ backgroundColor: '#22D3A5' }}></div>
                   <span>No more forgotten birthdays!</span>
                 </div>
               </div>
             </div>
 
             {/* Subtle CTA */}
-            <div className="pt-6 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.08)' }}>
-              <p className="text-sm mb-4" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+            <div className="pt-4 sm:pt-6 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.08)' }}>
+              <p className="text-sm mb-3 sm:mb-4" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                 Want to organize your own birthday reminders?
               </p>
               <a
                 href="/"
-                className="inline-flex items-center space-x-2 font-medium transition-colors hover:text-white text-lg"
+                className="inline-flex items-center space-x-2 font-medium transition-colors hover:text-white text-base sm:text-lg"
                 style={{ color: '#22D3A5' }}
               >
                 <span>Check out BirthdayReminder</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </a>
@@ -172,34 +172,34 @@ export default function InvitePage() {
 
   // Form State - Main invite form
   return (
-    <div className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: '#0A0A0A' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8" style={{ backgroundColor: '#0A0A0A' }}>
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8" 
                style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
-            <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0v1m6-1v1m-6 0h6M6 7H3a1 1 0 00-1 1v11a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1h-3" />
             </svg>
           </div>
           
-          <h1 className="text-4xl font-bold text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>You're Invited! 🎉</h1>
-          <p className="text-lg leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>You're Invited! 🎉</h1>
+          <p className="text-base sm:text-lg leading-relaxed px-2" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             Your friend wants to make sure they never miss your birthday! 
             Just add your details below and you're all set.
           </p>
         </div>
 
         {/* Form */}
-        <div className="backdrop-blur-sm rounded-3xl p-10 border" 
+        <div className="backdrop-blur-sm rounded-3xl p-6 sm:p-10 border" 
              style={{ 
                backgroundColor: 'rgba(255, 255, 255, 0.02)', 
                borderColor: 'rgba(255, 255, 255, 0.08)',
                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
              }}>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Name Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Your Name *
               </label>
@@ -209,7 +209,7 @@ export default function InvitePage() {
                 placeholder="What should we call you?"
                 value={form.name}
                 onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all text-white placeholder-gray-500"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all text-white placeholder-gray-500 text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -218,7 +218,7 @@ export default function InvitePage() {
             </div>
 
             {/* Date Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Your Birthday *
               </label>
@@ -227,7 +227,7 @@ export default function InvitePage() {
                 type="date"
                 value={form.date_of_birth}
                 onChange={(e) => setForm(f => ({ ...f, date_of_birth: e.target.value }))}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all text-white"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all text-white text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -236,7 +236,7 @@ export default function InvitePage() {
             </div>
 
             {/* Notes Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Special Notes (Optional)
               </label>
@@ -245,7 +245,7 @@ export default function InvitePage() {
                 placeholder="Any gift ideas, favorite treats, or special notes for your friend..."
                 value={form.notes}
                 onChange={(e) => setForm(f => ({ ...f, notes: e.target.value }))}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all resize-none text-white placeholder-gray-500"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all resize-none text-white placeholder-gray-500 text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -254,9 +254,9 @@ export default function InvitePage() {
             </div>
 
             {/* Privacy Notice */}
-            <div className="rounded-2xl p-4 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
+            <div className="rounded-2xl p-3 sm:p-4 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
               <div className="flex items-start space-x-3">
-                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
                 <div>
@@ -272,7 +272,7 @@ export default function InvitePage() {
             <button
               type="submit"
               disabled={!form.name || !form.date_of_birth}
-              className="w-full py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
               style={{ 
                 background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
                 color: '#FFFFFF',
@@ -285,7 +285,7 @@ export default function InvitePage() {
         </div>
 
         {/* Footer Message */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center px-2">
           <p className="text-sm leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
             🎈 Your friend cares about celebrating you! They'll get gentle reminders so your special day is never forgotten.
           </p>

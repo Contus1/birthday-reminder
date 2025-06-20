@@ -86,49 +86,49 @@ export default function SignupPage() {
     <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }}>
       <div className="flex flex-col min-h-screen">
         {/* Main Content */}
-        <main className="flex-1 flex items-center justify-center px-6 py-12">
+        <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-6 sm:py-12">
           <div className="w-full max-w-md">
             {/* Header */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-6 sm:mb-12">
               <button
                 onClick={() => router.push('/')}
-                className="inline-flex items-center space-x-2 transition-colors mb-8 hover:text-white"
+                className="inline-flex items-center space-x-2 transition-colors mb-4 sm:mb-8 hover:text-white"
                 style={{ color: 'rgba(255, 255, 255, 0.7)' }}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span className="font-medium">Back to Home</span>
+                <span className="font-medium text-sm sm:text-base">Back to Home</span>
               </button>
               
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-8" 
                    style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
-                <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
               </div>
               
-              <h1 className="text-4xl font-bold text-white mb-4" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Create Account</h1>
-              <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Join BirthdayReminder and never miss a celebration</p>
+              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 sm:mb-4" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Create Account</h1>
+              <p className="text-base sm:text-lg" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Join BirthdayReminder and never miss a celebration</p>
             </div>
 
             {/* Signup Form */}
-            <div className="backdrop-blur-sm rounded-3xl p-10 border" 
+            <div className="backdrop-blur-sm rounded-3xl p-6 sm:p-10 border" 
                  style={{ 
                    backgroundColor: 'rgba(255, 255, 255, 0.02)', 
                    borderColor: 'rgba(255, 255, 255, 0.08)',
                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
                  }}>
-              <form onSubmit={handleSignup} className="space-y-6">
+              <form onSubmit={handleSignup} className="space-y-4 sm:space-y-6">
                 {/* Error Message */}
                 {error && (
-                  <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(255, 107, 107, 0.1)', borderColor: 'rgba(255, 107, 107, 0.2)' }}>
-                    <div className="flex items-center space-x-3">
-                      <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="rounded-xl p-3 sm:p-4 border" style={{ backgroundColor: 'rgba(255, 107, 107, 0.1)', borderColor: 'rgba(255, 107, 107, 0.2)' }}>
+                    <div className="flex items-start space-x-2 sm:space-x-3">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5" style={{ color: '#FF6B6B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <div>
-                        <p className="text-sm font-medium" style={{ color: '#FF6B6B' }}>{error}</p>
+                        <p className="text-xs sm:text-sm font-medium" style={{ color: '#FF6B6B' }}>{error}</p>
                         {error.includes('already exists') && (
                           <button
                             type="button"
@@ -146,13 +146,13 @@ export default function SignupPage() {
 
                 {/* Success Message */}
                 {message && (
-                  <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
-                    <div className="flex items-center space-x-3">
-                      <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="rounded-xl p-3 sm:p-4 border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
+                    <div className="flex items-start space-x-2 sm:space-x-3">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <div>
-                        <p className="text-sm font-medium" style={{ color: '#22D3A5' }}>{message}</p>
+                        <p className="text-xs sm:text-sm font-medium" style={{ color: '#22D3A5' }}>{message}</p>
                         <p className="text-xs mt-1" style={{ color: 'rgba(34, 211, 165, 0.7)' }}>
                           Check your spam folder if you don't see the confirmation email.
                         </p>
@@ -162,7 +162,7 @@ export default function SignupPage() {
                 )}
 
                 {/* Email Field */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Email Address
                   </label>
@@ -173,7 +173,7 @@ export default function SignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value.toLowerCase().trim())}
                     disabled={loading}
-                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500 text-base"
                     style={{ 
                       backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                       borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -182,7 +182,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* Password Field */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Password
                   </label>
@@ -193,7 +193,7 @@ export default function SignupPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading}
-                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500 text-base"
                     style={{ 
                       backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                       borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -208,7 +208,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* Confirm Password Field */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                     Confirm Password
                   </label>
@@ -219,7 +219,7 @@ export default function SignupPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={loading}
-                    className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                    className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500 text-base"
                     style={{ 
                       backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                       borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -236,7 +236,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* Terms Notice */}
-                <div className="rounded-xl p-4 border" style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                <div className="rounded-xl p-3 sm:p-4 border" style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
                   <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                     By creating an account, you agree to our terms of service and privacy policy. 
                     We'll help you never miss a birthday again! 🎉
@@ -247,7 +247,7 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading || !email || !password || !confirmPassword || password !== confirmPassword}
-                  className="w-full py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
                   style={{ 
                     background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
                     color: '#FFFFFF',
@@ -256,7 +256,7 @@ export default function SignupPage() {
                 >
                   {loading ? (
                     <div className="flex items-center justify-center space-x-2">
-                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-white border-t-transparent"></div>
                       <span>Checking Email...</span>
                     </div>
                   ) : (
@@ -266,16 +266,16 @@ export default function SignupPage() {
               </form>
 
               {/* Divider */}
-              <div className="my-8 flex items-center">
+              <div className="my-5 sm:my-8 flex items-center">
                 <div className="flex-1 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)' }}></div>
-                <span className="px-4 text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Already have an account?</span>
+                <span className="px-3 sm:px-4 text-xs sm:text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Already have an account?</span>
                 <div className="flex-1 border-t" style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)' }}></div>
               </div>
 
               {/* Login Link */}
               <button
                 onClick={() => router.push('/login')}
-                className="w-full py-4 text-lg font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105"
+                className="w-full py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105 min-h-[48px]"
                 style={{ 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
                   color: 'rgba(255, 255, 255, 0.9)',

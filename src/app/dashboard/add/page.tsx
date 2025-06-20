@@ -66,7 +66,7 @@ export default function AddBirthday() {
     <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }}>
       {/* Navigation Header */}
       <nav className="backdrop-blur-xl border-b sticky top-0 z-50" style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
-        <div className="max-w-4xl mx-auto px-8 py-6">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 py-4 sm:py-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <button
@@ -74,47 +74,47 @@ export default function AddBirthday() {
                 className="flex items-center space-x-2 transition-colors duration-300 hover:text-white"
                 style={{ color: 'rgba(255, 255, 255, 0.7)' }}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span className="font-medium">Back to Dashboard</span>
+                <span className="font-medium text-sm sm:text-base">Back to Dashboard</span>
               </button>
             </div>
             
-            <div className="text-lg font-semibold text-white" style={{ fontWeight: 600, letterSpacing: '-0.01em' }}>
+            <div className="text-base sm:text-lg font-semibold text-white" style={{ fontWeight: 600, letterSpacing: '-0.01em' }}>
               Add Birthday
             </div>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-2xl mx-auto px-8 py-16">
+      <main className="max-w-2xl mx-auto px-4 sm:px-8 py-8 sm:py-16">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8" 
+        <div className="text-center mb-8 sm:mb-16">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8" 
                style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
-            <svg className="w-10 h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           </div>
-          <h1 className="text-5xl font-bold text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
             Add New <span style={{ color: '#22D3A5' }}>Birthday</span>
           </h1>
-          <p className="text-xl leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          <p className="text-base sm:text-xl leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             Add a friend's birthday to your collection and never miss their special day.
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="backdrop-blur-sm rounded-3xl border p-12" 
+        <div className="backdrop-blur-sm rounded-3xl border p-6 sm:p-12" 
              style={{ 
                backgroundColor: 'rgba(255, 255, 255, 0.02)', 
                borderColor: 'rgba(255, 255, 255, 0.08)',
                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
              }}>
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* Name Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Full Name *
               </label>
@@ -125,7 +125,7 @@ export default function AddBirthday() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white placeholder-gray-500 text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -134,7 +134,7 @@ export default function AddBirthday() {
             </div>
 
             {/* Date Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Date of Birth *
               </label>
@@ -144,7 +144,7 @@ export default function AddBirthday() {
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed text-white text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -153,17 +153,17 @@ export default function AddBirthday() {
             </div>
 
             {/* Notes Field */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-semibold text-white" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '-0.01em' }}>
                 Notes (Optional)
               </label>
               <textarea
-                rows={4}
+                rows={3}
                 placeholder="Add any special notes or gift ideas..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed resize-none text-white placeholder-gray-500"
+                className="w-full px-3 py-3 sm:px-4 sm:py-4 border rounded-xl focus:ring-4 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed resize-none text-white placeholder-gray-500 text-base"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -172,11 +172,11 @@ export default function AddBirthday() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 pt-8">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-6 sm:pt-8">
               <button
                 type="submit"
                 disabled={loading || !name || !dob}
-                className="flex-1 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="flex-1 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
                 style={{ 
                   background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
                   color: '#FFFFFF',
@@ -185,7 +185,7 @@ export default function AddBirthday() {
               >
                 {loading ? (
                   <div className="flex items-center justify-center space-x-2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-white border-t-transparent"></div>
                     <span>Saving...</span>
                   </div>
                 ) : (
@@ -196,7 +196,7 @@ export default function AddBirthday() {
                 type="button"
                 onClick={() => router.push('/dashboard')}
                 disabled={loading}
-                className="flex-1 py-4 text-lg font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
+                className="flex-1 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 min-h-[48px]"
                 style={{ 
                   borderColor: 'rgba(255, 255, 255, 0.2)',
                   color: 'rgba(255, 255, 255, 0.9)',
@@ -210,8 +210,8 @@ export default function AddBirthday() {
         </div>
 
         {/* Help Text */}
-        <div className="mt-12 text-center">
-          <div className="p-6 rounded-2xl border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
+        <div className="mt-8 sm:mt-12 text-center">
+          <div className="p-4 sm:p-6 rounded-2xl border" style={{ backgroundColor: 'rgba(34, 211, 165, 0.1)', borderColor: 'rgba(34, 211, 165, 0.2)' }}>
             <p className="text-sm leading-relaxed" style={{ color: '#22D3A5' }}>
               💡 <strong>Pro tip:</strong> You can also share your invite link to let friends add their own birthdays!
             </p>
