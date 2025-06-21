@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import ical, { ICalAlarmType, ICalEventRepeatingFreq } from 'ical-generator';
+import ical, { ICalAlarmType, ICalEventRepeatingFreq, ICalCalendarMethod } from 'ical-generator';
 import { createClient } from '@supabase/supabase-js';
 import nodemailer from 'nodemailer';
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   // 0) parse user info
   const { userId, userEmail } = await req.json();
 
-  // 1) fetch only that user’s birthdays
+  // 1) fetch only that user's birthdays
   const { data: birthdays, error: fetchError } = await supabaseAdmin
     .from('birthdays')
     .select('*')
@@ -41,8 +41,12 @@ export async function POST(req: Request) {
     );
   }
 
-  // 2) build the ICS
-  const cal = ical({ name: `${userEmail}'s Birthdays` });
+  // 2) build the ICS with REQUEST method for calendar invites
+  const cal = ical({ 
+    name: `${userEmail}'s Birthdays`,
+    method: ICalCalendarMethod.REQUEST
+  });
+  
   for (const b of birthdays) {
     const [y, m, d] = b.date_of_birth.split('-').map(Number);
     const start = new Date(y, m - 1, d, 9, 0);
@@ -53,6 +57,8 @@ export async function POST(req: Request) {
       summary: `${b.name}'s Birthday`,
       description: b.notes?.trim() || `Wish ${b.name} a happy birthday!`,
       repeating: { freq: ICalEventRepeatingFreq.YEARLY },
+      organizer: { name: 'BirthdayReminder', email: userEmail },
+      attendees: [{ name: userEmail, email: userEmail }]
     });
     ev.createAlarm({
       type: ICalAlarmType.display,
@@ -62,22 +68,30 @@ export async function POST(req: Request) {
   }
   const icsString = cal.toString();
 
-  // 3) email to the user
+  // 3) email to the user with calendar invitation
   try {
     const info = await transporter.sendMail({
       from: `"BirthdayReminder" <${process.env.SMTP_USER}>`,
       to: userEmail,
-      subject: 'Your Birthday Export (.ics)',
-      text: 'Here is your exported birthdays calendar file.',
-      attachments: [
+      subject: 'Your Birthday Calendar Invite',
+      text: 'Here is your birthday calendar invitation. Tap "Add to Calendar" to accept.',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #00C08B;">🎉 Your Birthday Calendar Invite</h2>
+          <p>Your birthday reminders are ready! Tap "Add to Calendar" below to add them to your calendar app.</p>
+          <p>This will create recurring yearly reminders for all your friends' birthdays.</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="font-size: 12px; color: #666;">Sent from BirthdayReminder</p>
+        </div>
+      `,
+      alternatives: [
         {
-          filename: 'birthdays.ics',
+          contentType: 'text/calendar; method=REQUEST',
           content: icsString,
-          contentType: 'text/calendar',
         },
       ],
     });
-    console.log(`ICS emailed to ${userEmail}, messageId=${info.messageId}`);
+    console.log(`Calendar invite emailed to ${userEmail}, messageId=${info.messageId}`);
   } catch (mailErr) {
     console.error('Mail error:', mailErr);
     // still continue to archive & return file

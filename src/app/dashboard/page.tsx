@@ -29,6 +29,7 @@ export default function Dashboard() {
 
   // invite UI
   const [inviteLink, setInviteLink] = useState<string | null>(null);
+  const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   // export success popup
@@ -52,8 +53,8 @@ export default function Dashboard() {
     }
   };
 
-  // generate & save an invite_code
-  const createInvite = async () => {
+  // generate & save an invite_code (or get existing one)
+  const createInvite = async (showLinkSection = true) => {
     const {
       data: { session },
       error: sessionError,
@@ -64,28 +65,48 @@ export default function Dashboard() {
       return;
     }
 
-    const code = nanoid();
-    const { error } = await supabase
+    // First check if user already has an invite code
+    const { data: existingInvite } = await supabase
       .from('invites')
-      .insert({ user_id: session.user.id, invite_code: code });
+      .select('invite_code')
+      .eq('user_id', session.user.id)
+      .single();
 
-    if (error) {
-      console.error('Error creating invite:', error);
-      return;
+    let code: string;
+    
+    if (existingInvite) {
+      // Use existing invite code
+      code = existingInvite.invite_code;
+    } else {
+      // Create new invite code
+      code = nanoid();
+      const { error } = await supabase
+        .from('invites')
+        .insert({ user_id: session.user.id, invite_code: code });
+
+      if (error) {
+        console.error('Error creating invite:', error);
+        return;
+      }
     }
 
-    setInviteLink(`${window.location.origin}/invite/${code}`);
+    setInviteCode(code);
     
-    // Smooth scroll to invite link section after a short delay
-    setTimeout(() => {
-      inviteLinkRef.current?.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
-      });
-    }, 100);
+    // Only set invite link and show section if explicitly requested
+    if (showLinkSection) {
+      const linkUrl = `${window.location.origin}/invite/${code}`;
+      setInviteLink(linkUrl);
+      
+      setTimeout(() => {
+        inviteLinkRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+    }
   };
 
-  // fetch your birthdays
+  // fetch your birthdays and existing invite codes
   useEffect(() => {
     (async () => {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
@@ -96,6 +117,7 @@ export default function Dashboard() {
 
       setUserEmail(session.user.email || null);
 
+      // Fetch birthdays
       const { data, error } = await supabase
         .from('birthdays')
         .select('*')
@@ -107,6 +129,12 @@ export default function Dashboard() {
       } else {
         setBirthdays(data || []);
       }
+
+      // Auto-load existing invite code if user has birthdays (silent mode)
+      if (data && data.length > 0) {
+        await createInvite(false);
+      }
+
       setLoading(false);
     })();
   }, [router]);
@@ -164,6 +192,25 @@ export default function Dashboard() {
     setShowExportSuccess(true);
   };
 
+  // open calendar subscription
+  const openCalendarSubscription = async () => {
+    // If no invite code exists, create one silently
+    if (!inviteCode) {
+      await createInvite(false);
+      // Wait a moment for state to update, then use the newly created code
+      setTimeout(() => {
+        if (inviteCode) {
+          const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
+          window.location.href = subscriptionUrl;
+        }
+      }, 500);
+      return;
+    }
+    
+    const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
+    window.location.href = subscriptionUrl;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0A0A0A' }}>
@@ -214,7 +261,7 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 md:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 mb-8 sm:mb-12 md:mb-16">
           {/* Add Birthday */}
           <button
             onClick={() => router.push('/dashboard/add')}
@@ -239,7 +286,7 @@ export default function Dashboard() {
 
           {/* Create Invite */}
           <button
-            onClick={createInvite}
+            onClick={() => createInvite(true)}
             className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center group"
             style={{ 
               backgroundColor: 'rgba(255, 255, 255, 0.02)', 
@@ -276,9 +323,32 @@ export default function Dashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Export Calendar</h3>
+            <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Export to Calendar</h3>
             <p className="text-sm sm:text-base" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Download & email .ics
+              Add events to my calendar
+            </p>
+          </button>
+
+          {/* Auto-Sync Calendar */}
+          <button
+            onClick={openCalendarSubscription}
+            disabled={birthdays.length === 0}
+            className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            style={{ 
+              backgroundColor: 'rgba(255, 255, 255, 0.02)', 
+              borderColor: 'rgba(255, 255, 255, 0.08)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300" 
+                 style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
+              <svg className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </div>
+            <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Auto-Sync Calendar</h3>
+            <p className="text-sm sm:text-base" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+              Updates automatically
             </p>
           </button>
 
@@ -353,8 +423,8 @@ export default function Dashboard() {
                       Pro tip:
                     </h4>
                     <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(34, 211, 165, 0.9)' }}>
-                      Share this in your group chat, let everyone add their birthdays, then export 
-                      and share the calendar back to keep everyone connected! 
+                      Share this in your group chat, let everyone add their birthdays, then use "Export to Calendar" or "Auto-Sync Calendar" 
+                      to get the calendar and keep everyone connected! 
                       <span className="inline-block ml-1">🎉</span>
                     </p>
                   </div>
@@ -412,7 +482,7 @@ export default function Dashboard() {
                   Add Birthday
                 </button>
                 <button
-                  onClick={createInvite}
+                  onClick={() => createInvite(true)}
                   className="px-6 py-3 sm:px-8 sm:py-4 font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105 text-base min-h-[48px]"
                   style={{ 
                     borderColor: 'rgba(255, 255, 255, 0.2)',
