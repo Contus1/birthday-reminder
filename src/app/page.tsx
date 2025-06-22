@@ -212,16 +212,7 @@ export default function Home() {
                   >
                     Sign In
                   </button>
-                  <button
-                    onClick={() => router.push('/signup')}
-                    className="px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                    style={{ 
-                      background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)',
-                      boxShadow: '0 8px 32px rgba(0, 192, 139, 0.3)'
-                    }}
-                  >
-                    Sign Up
-                  </button>
+                
                 </>
               )}
             </div>
@@ -386,7 +377,7 @@ export default function Home() {
                 boxShadow: '0 8px 32px rgba(0, 192, 139, 0.4)'
               }}
             >
-              Start for Free
+              Sign Up Free
             </button>
           </div>
         </div>

@@ -108,10 +108,8 @@ export default function SignupPage() {
                 className="inline-flex items-center space-x-2 transition-colors mb-3 sm:mb-8 hover:text-white"
                 style={{ color: 'rgba(255, 255, 255, 0.7)' }}
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span className="font-medium text-sm sm:text-base">Back to Home</span>
+                
+                <span className="font-medium text-sm sm:text-base"> ↩ Back to Home</span>
               </button>
               
               <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-8" 

@@ -7,6 +7,7 @@ import { customAlphabet } from 'nanoid';
 import ProfileDropdown from '../components/ProfileDropdown';
 import ExportSuccessPopup from '../components/ExportSuccessPopup';
 import AutoSyncSuccessPopup from '../components/AutoSyncSuccessPopup';
+import QuickStartGuide from '../components/QuickStartGuide';
 
 // 8-char alphanumeric ID
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
@@ -17,6 +18,12 @@ type Birthday = {
   name: string;
   date_of_birth: string;
   notes: string | null;
+};
+
+type SyncStatus = {
+  calendar_sync_enabled: boolean;
+  first_sync_date: string | null;
+  last_sync_date: string | null;
 };
 
 export default function Dashboard() {
@@ -32,6 +39,9 @@ export default function Dashboard() {
   const [inviteLink, setInviteLink] = useState<string | null>(null);
   const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // sync status
+  const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
 
   // export success popup
   const [showExportSuccess, setShowExportSuccess] = useState(false);
@@ -53,6 +63,68 @@ export default function Dashboard() {
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy: ', err);
+    }
+  };
+
+  // update sync status in database
+  const updateSyncStatus = async (enabled: boolean) => {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
+
+    if (sessionError || !session) return;
+
+    const now = new Date().toISOString();
+    
+    // First try to update existing record
+    const { error: updateError } = await supabase
+      .from('user_sync_status')
+      .update({ 
+        calendar_sync_enabled: enabled,
+        last_sync_date: now,
+        first_sync_date: syncStatus?.first_sync_date || now,
+        updated_at: now
+      })
+      .eq('user_id', session.user.id);
+
+    // If update failed (no existing record), insert new one
+    if (updateError) {
+      const { error: insertError } = await supabase
+        .from('user_sync_status')
+        .insert({
+          user_id: session.user.id,
+          calendar_sync_enabled: enabled,
+          first_sync_date: now,
+          last_sync_date: now
+        });
+
+      if (insertError) {
+        console.error('Error inserting sync status:', insertError);
+        return;
+      }
+    }
+
+    // Update local state
+    setSyncStatus({
+      calendar_sync_enabled: enabled,
+      first_sync_date: syncStatus?.first_sync_date || now,
+      last_sync_date: now
+    });
+  };
+
+  // fetch sync status
+  const fetchSyncStatus = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('user_sync_status')
+      .select('calendar_sync_enabled, first_sync_date, last_sync_date')
+      .eq('user_id', userId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+      console.error('Error fetching sync status:', error);
+    } else if (data) {
+      setSyncStatus(data);
     }
   };
 
@@ -133,6 +205,9 @@ export default function Dashboard() {
         setBirthdays(data || []);
       }
 
+      // Fetch sync status
+      await fetchSyncStatus(session.user.id);
+
       // Auto-load existing invite code if user has birthdays (silent mode)
       if (data && data.length > 0) {
         await createInvite(false);
@@ -205,7 +280,8 @@ export default function Dashboard() {
         if (inviteCode) {
           const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
           window.location.href = subscriptionUrl;
-          // Show the success popup
+          // Update sync status and show success popup
+          updateSyncStatus(true);
           setShowAutoSyncSuccess(true);
         }
       }, 500);
@@ -214,7 +290,8 @@ export default function Dashboard() {
     
     const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
     window.location.href = subscriptionUrl;
-    // Show the success popup
+    // Update sync status and show success popup
+    await updateSyncStatus(true);
     setShowAutoSyncSuccess(true);
   };
 
@@ -262,10 +339,56 @@ export default function Dashboard() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 md:mb-8" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>
             Your <span style={{ color: '#22D3A5' }}>Dashboard</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto mb-4 sm:mb-6" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             Manage birthdays, create invite links, and never miss a celebration
           </p>
+          
+          {/* Quick Start Guide - smaller and centered */}
+          <div className="flex justify-center">
+            <div className="inline-block">
+              <QuickStartGuide variant="dashboard" />
+            </div>
+          </div>
         </div>
+
+        {/* Sync Status Banner */}
+        {syncStatus?.calendar_sync_enabled && (
+          <div className="mb-8 sm:mb-12 md:mb-16">
+            <div className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border" 
+                 style={{ 
+                   backgroundColor: 'rgba(34, 211, 165, 0.1)', 
+                   borderColor: 'rgba(34, 211, 165, 0.2)'
+                 }}>
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center flex-shrink-0" 
+                     style={{ backgroundColor: '#22D3A5' }}>
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: '#22D3A5', fontWeight: 700, letterSpacing: '-0.01em' }}>
+                    ✅ Calendar Auto-Sync Enabled
+                  </h3>
+                  <p className="text-sm sm:text-base mb-1" style={{ color: 'rgba(34, 211, 165, 0.8)' }}>
+                    Your calendar is automatically syncing with your birthdays.
+                  </p>
+                  {syncStatus.first_sync_date && (
+                    <p className="text-xs sm:text-sm" style={{ color: 'rgba(34, 211, 165, 0.6)' }}>
+                      First synced: {new Date(syncStatus.first_sync_date).toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 mb-8 sm:mb-12 md:mb-16">
@@ -340,13 +463,21 @@ export default function Dashboard() {
           <button
             onClick={openCalendarSubscription}
             disabled={birthdays.length === 0}
-            className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative"
             style={{ 
               backgroundColor: 'rgba(255, 255, 255, 0.02)', 
               borderColor: 'rgba(255, 255, 255, 0.08)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
             }}
           >
+            {syncStatus?.calendar_sync_enabled && (
+              <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center" 
+                   style={{ backgroundColor: '#22D3A5' }}>
+                <svg className="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300" 
                  style={{ background: 'rgba(0, 192, 139, 0.15)' }}>
               <svg className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: '#22D3A5' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -355,7 +486,7 @@ export default function Dashboard() {
             </div>
             <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Auto-Sync Calendar</h3>
             <p className="text-sm sm:text-base" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Updates automatically
+              {syncStatus?.calendar_sync_enabled ? 'Already syncing' : 'Updates automatically'}
             </p>
           </button>
 
@@ -581,7 +712,7 @@ export default function Dashboard() {
             <p className="text-sm sm:text-base" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
               Built with love in Madrid by <span style={{ color: '#22D3A5' }}>Carl Lichtl</span>
             </p>
-          </div>
+          </div> 
         </div>
       </footer>
 
