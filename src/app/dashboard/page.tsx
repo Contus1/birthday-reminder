@@ -6,6 +6,7 @@ import { supabase } from '../supabaseClient';
 import { customAlphabet } from 'nanoid';
 import ProfileDropdown from '../components/ProfileDropdown';
 import ExportSuccessPopup from '../components/ExportSuccessPopup';
+import AutoSyncSuccessPopup from '../components/AutoSyncSuccessPopup';
 
 // 8-char alphanumeric ID
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
@@ -34,6 +35,8 @@ export default function Dashboard() {
 
   // export success popup
   const [showExportSuccess, setShowExportSuccess] = useState(false);
+  // auto-sync success popup
+  const [showAutoSyncSuccess, setShowAutoSyncSuccess] = useState(false);
 
   // logout handler
   const handleLogout = async () => {
@@ -202,6 +205,8 @@ export default function Dashboard() {
         if (inviteCode) {
           const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
           window.location.href = subscriptionUrl;
+          // Show the success popup
+          setShowAutoSyncSuccess(true);
         }
       }, 500);
       return;
@@ -209,6 +214,8 @@ export default function Dashboard() {
     
     const subscriptionUrl = `webcal://${window.location.host}/api/calendar?token=${inviteCode}`;
     window.location.href = subscriptionUrl;
+    // Show the success popup
+    setShowAutoSyncSuccess(true);
   };
 
   if (loading) {
@@ -554,10 +561,40 @@ export default function Dashboard() {
         </div>
       </main>
 
+      {/* Footer - moved outside main and before popups */}
+      <footer className="backdrop-blur-sm border-t relative z-10" style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderTopColor: 'rgba(255, 255, 255, 0.08)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00C08B 0%, #00B0D5 100%)' }}>
+                <svg className="w-3 h-3 sm:w-5 sm:h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white" style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>
+                Birthday<span style={{ color: '#22D3A5' }}>Reminder</span>
+              </div>
+            </div>
+            <p className="text-base sm:text-lg mb-2 text-white" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+              © 2025 BirthdayReminder. Never miss a birthday again.
+            </p>
+            <p className="text-sm sm:text-base" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+              Built with love in Madrid by <span style={{ color: '#22D3A5' }}>Carl Lichtl</span>
+            </p>
+          </div>
+        </div>
+      </footer>
+
       {/* Export Success Popup */}
       <ExportSuccessPopup 
         isOpen={showExportSuccess} 
         onClose={() => setShowExportSuccess(false)} 
+      />
+
+      {/* Auto-Sync Success Popup */}
+      <AutoSyncSuccessPopup 
+        isOpen={showAutoSyncSuccess} 
+        onClose={() => setShowAutoSyncSuccess(false)} 
       />
     </div>
   );
